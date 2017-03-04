@@ -5,18 +5,21 @@ tex_file=$(mktemp) ## Random temp file name
 cat<<EOF >$tex_file   ## Print the tex file header
 \documentclass{article}
 \usepackage{listings}
-\usepackage[usenames,dvipsnames]{color}  %% Allow color names
+\usepackage{courier}
+\usepackage[letterpaper, margin=1in]{geometry}
+\usepackage[dvipsnames]{xcolor}  %% Allow color names
 \lstdefinestyle{customasm}{
   belowcaptionskip=1\baselineskip,
   xleftmargin=\parindent,
-  language=C++,   %% Change this to whatever you write in
+  language=java,   %% Change this to whatever you write in
   breaklines=true, %% Wrap long lines
-  basicstyle=\footnotesize\ttfamily,
+  basicstyle=\ttfamily,
+  numbers=left,
+  stepnumber=1,
   commentstyle=\itshape\color{Gray},
-  stringstyle=\color{Black},
-  keywordstyle=\bfseries\color{OliveGreen},
-  identifierstyle=\color{blue},
-  xleftmargin=-8em,
+  stringstyle=\color{Orange},
+  keywordstyle=\bfseries\color{WildStrawberry},
+  identifierstyle=\color{Blue},
 }        
 \usepackage[colorlinks=true,linkcolor=blue]{hyperref} 
 \begin{document}
@@ -38,4 +41,4 @@ done &&
 echo "\end{document}" >> $tex_file &&
 pdflatex $tex_file -output-directory . && 
 pdflatex $tex_file -output-directory .  ## This needs to be run twice 
-                                           ## for the TOC to be generated  
+                                           ## for the TOC to be generated 
