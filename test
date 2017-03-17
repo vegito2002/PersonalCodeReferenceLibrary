@@ -4,35 +4,40 @@
     	System.out.println("Type the input: ");
     	int input = reader.nextInt();
     	for (int i : tester.countBits(input)) System.out.println(i);
-    }    public static void main(String[] arg) {
-    	CountingBits tester = new CountingBits();
-    	Scanner reader = new Scanner(System.in);
-    	System.out.println("Type the input: ");
-    	int input = reader.nextInt();
-    	for (int i : tester.countBits(input)) System.out.println(i);
-    }    public static void main(String[] arg) {
-    	CountingBits tester = new CountingBits();
-    	Scanner reader = new Scanner(System.in);
-    	System.out.println("Type the input: ");
-    	int input = reader.nextInt();
-    	for (int i : tester.countBits(input)) System.out.println(i);
-    }    public static void main(String[] arg) {
-    	CountingBits tester = new CountingBits();
-    	Scanner reader = new Scanner(System.in);
-    	System.out.println("Type the input: ");
-    	int input = reader.nextInt();
-    	for (int i : tester.countBits(input)) System.out.println(i);
-    }    public static void main(String[] arg) {
-    	CountingBits tester = new CountingBits();
-    	Scanner reader = new Scanner(System.in);
-    	System.out.println("Type the input: ");
-
-    	int input = reader.nextInt();
-    	for (int i : tester.countBits(input)) System.out.println(i);
-    }    public static void main(String[] arg) {
-    	CountingBits tester = new CountingBits();
-    	Scanner reader = new Scanner(System.in);
-    	System.out.println("Type the input: ");
-    	int input = reader.nextInt();
-    	for (int i : tester.countBits(input)) System.out.println(i);
     }
+        public static void main(String[] arg) {
+        CountingBits tester = new CountingBits();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Type the input: ");
+        int input = reader.nextInt();
+        for (int i : tester.countBits(input)) System.out.println(i);
+    }
+        public static void main(String[] arg) {
+        CountingBits tester = new CountingBits();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Type the input: ");
+        int input = reader.nextInt();
+        for (int i : tester.countBits(input)) System.out.println(i);
+    }
+        public static void main(String[] arg) {
+        CountingBits tester = new CountingBits();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Type the input: ");
+        int input = reader.nextInt();
+        for (int i : tester.countBits(input)) System.out.println(i);
+    }
+        public static void main(String[] arg) {
+        CountingBits tester = new CountingBits();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Type the input: ");
+        int input = reader.nextInt();
+        for (int i : tester.countBits(input)) System.out.println(i);
+    }
+        public static void main(String[] arg) {
+        CountingBits tester = new CountingBits();
+        Scanner reader = new Scanner(System.in);
+        System.out.println("Type the input: ");
+        int input = reader.nextInt();
+        for (int i : tester.countBits(input)) System.out.println(i);
+    }
+    
