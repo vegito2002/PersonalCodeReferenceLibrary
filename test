@@ -1,4 +1,8 @@
 void a {
 line of a;
 }
+void b {
+line of b;
+}
+
 
