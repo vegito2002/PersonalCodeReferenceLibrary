@@ -3,11 +3,6 @@ void write1() {
         System.out.println("First line");
     }
 }
-void write2() {
-    for(int i=0; i<10; i++) {
-        System.out.println("Second line");
-    }
-}
 void write3() {
     for(int i=0; i<10; i++) {
         System.out.println("Third line");
