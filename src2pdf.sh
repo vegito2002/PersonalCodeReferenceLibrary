@@ -11,7 +11,7 @@ cat<<EOF >$tex_file   ## Print the tex file header
 \lstdefinestyle{customasm}{
   belowcaptionskip=1\baselineskip,
   xleftmargin=\parindent,
-  language=Java,   %% Change this to whatever you write in
+  language=Prolog,   %% Change this to whatever you write in
   breaklines=true, %% Wrap long lines
   basicstyle=\ttfamily,
   numbers=left,
