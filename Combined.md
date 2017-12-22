@@ -257,7 +257,7 @@ Also note how it is possible for the initiator to authenticate the responder fro
 ## 6.1 Overview
 In `Noise`, the choice of `handshake pattern` largely determines security properties. Other factors include pattern validity, choice of crypto primitives, protocol implementation etc. We can instantiate a handshake pattern with `DH functions`, `cipher functions` and `hash functions` to give a concrete `Noise protocol`.
 
-[Forward Security](https://en.wikipedia.org/wiki/Forward_secrecy)(FS) is a property of secure communication in which compromises of long-term keys does not compromise past session keys. FS protects past sessions against future compromises of secret keys[Wifi for FS](https://en.wikipedia.org/wiki/Forward_secrecy). `Noise` support FS in some handshake pattern.
+[Forward Security](https://en.wikipedia.org/wiki/Forward_secrecy)(FS) is a property of secure communication in which compromises of long-term keys does not compromise past session keys. FS protects past sessions against future compromises of secret keys[Wiki for FS](https://en.wikipedia.org/wiki/Forward_secrecy). `Noise` support FS in some handshake pattern.
 
 Different protocol patterns lead to different security properties. The two major kinds of security property that we are concerned about, are **authentication** and **confidentiality**. `Noise` categorizes common levels of security properties achievable. 
 
@@ -450,7 +450,7 @@ Among crypto primitives, `Noise` hasn't use signature functions. In some pattern
 
 [Slide for Noise Protocol Framework, Trevor Perrin](https://noiseprotocol.org/docs/noise_stanford_seminar_2016.pdf)
 
-[Wifi for FS](https://en.wikipedia.org/wiki/Forward_secrecy)
+[Wiki for FS](https://en.wikipedia.org/wiki/Forward_secrecy)
 
 https://en.wikipedia.org/wiki/Authenticated_encryption
 
