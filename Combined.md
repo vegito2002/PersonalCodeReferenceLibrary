@@ -262,19 +262,19 @@ In `Noise`, the choice of `handshake pattern` largely determines security proper
 Different protocol patterns lead to different security properties. The two major kinds of security property that we are concerned about, are **authentication** and **confidentiality**. `Noise` categorizes common levels of security properties achievable. 
 
 For **authentication**:
-- 0. No authentication.
-- 1. Sender authentication vulnerable to key-compromise impersonation (KCI). The sender authentication is based on DH involving both parties' static key pairs. If the recipient's static key has been compromised, this authentication can be forged.
-- 2. Sender authentication resistant to key-compromise impersonation (KCI). The sender authentication is based on DH involving both sender's static key and the recipient's ephemeral key pair.
+- `0`: No authentication.
+- `1`: Sender authentication vulnerable to key-compromise impersonation (KCI). The sender authentication is based on DH involving both parties' static key pairs. If the recipient's static key has been compromised, this authentication can be forged.
+- `2`: Sender authentication resistant to key-compromise impersonation (KCI). The sender authentication is based on DH involving both sender's static key and the recipient's ephemeral key pair.
 
 The key difference between `1` and `2` is whether the payload is being encrypted with the recipient's static key or ephemeral key. If authentication is done based on`ss`, compromise of the recipient’s private static key may enable an active attacker to forge any message without being detected by the recipient. But if the recipient’s private ephemeral key is used for the authentication instead, this compromise is no longer a serious danger. 
 
 For **confidentiality**:
-- 0. No confidentiality. Payload is in cleartext.
-- 1. Encryption to an ephemeral recipient, 
-- 2. Encryption to a known recipient, forward secrecy for sender compromise only, vulnerable to replay.
-- 3. Encryption to a known recipient, weak forward secrecy.
-- 4. Encryption to a known recipient, weak forward secrecy if the sender's private key has been compromised.
-- 5. Encryption to a known recipient, strong forward secrecy.
+- `0`: No confidentiality. Payload is in cleartext.
+- `1`: Encryption to an ephemeral recipient, 
+- `2`: Encryption to a known recipient, forward secrecy for sender compromise only, vulnerable to replay.
+- `3`: Encryption to a known recipient, weak forward secrecy.
+- `4`: Encryption to a known recipient, weak forward secrecy if the sender's private key has been compromised.
+- `5`: Encryption to a known recipient, strong forward secrecy.
 
 The key difference between `2` and `3` is whether payload is encrypted with the recipient's static key or ephemeral key, similar to how level `1` and level `2`  is different in authentication. The similarities between `3` and `4` are they both use two DH based on ephemeral-ephemeral key pair and ephemeral-static key pair. However, in `3`'s second DH, recipient's keys are not verified by the sender, while in `4` these keys are verified by the sender. Confidentiality `5` is reached if recipient's static private key isn't stolen by an attacker.
 
