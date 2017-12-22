@@ -3,14 +3,14 @@ Team Members:
 * Shiwe Weng  (wengshiwei@jhu.edu)
 * Qiang Zhang (qzhang46@jhu.edu)
 
-# Noise Protocol Overview
+# 1. Noise Protocol Overview
 Noise Protocol(Noise) is a framework based on `Diffie-Hellman(DH)` key agreement.
 
 `Noise` has two phases, `handshake phase` and `transport phase`. In the former, two parties exchange DH public keys and perform a sequence of DH operations, hashing the DH results into a shared secret key incrementally, eventually resulting in a final shared secret that can be used to encrypt all traffic during subsequent `transport phase`. 
 
 `Noise` supports handshakes where each party has a long-term `static key pair` and/or an `ephemeral key pair`. In terminology of `Noise`, `s` denotes a `static key` and `e` denotes an `ephemeral key`. `r` denotes a remote party, therefore `rs` and `re` denote such keys in remote party. Certain subtle semantic variations may apply when `r` is used in special occasions such as pattern name parameters etc. 
 
-# Noise Protocol Handshake
+# 2. Noise Protocol Handshake
 `Noise` use a `handshake pattern` to specify a handshake. Here is an example:
 
 ```
@@ -57,12 +57,12 @@ Back to our pre DH example:
 * `-> e`: the initiator sends its own ephemeral public key in the first message.
 * `<- e, ee`: the responder sends its own ephemeral public key to the initiator in the response. Since now either party possesses the ephemeral public key of the opponent, a DH between the two ephemeral key pairs is possible and thus is performed. Usually, this opens up the possibility of encryption in later handshake messages and transport messages.
 
-# Crypto Primitives
+# 3. Crypto Primitives
 `Noise` itself is just a permissive framework, or a little language, that specifies the framework of actual communication protocols. To get one actual protocol, one has to instantiate `Noise` with concrete hash functions, encryption functions etc. Expectably, these argument functions has to adhere to certain requirements specified by `Noise`. 
 
 `Noise` protocol define signatures for crypto primitives `DH functions`, `cipher functions` and `hash functions`. `Noise` provides implementation choices for these primitives. Encryption (`ENCRYPT(k, n, ad, plaintext)`) must be in Authenticated Encryption with Associated Data(`AEAD`) mode with associated data `ad`. Key Derivation Function (KDF, `HKDF`) is based on `hash functions`. It would be a better idea to the `Noise` documentation per se for the verbose version of these function definition requirements. Here, we provide these explanations in a more intuitive form as a typical workflow. 
 
-# Noise Protocol Workflow
+# 4. Noise Protocol Workflow
 ```python
 # For simplicity we omit `self` argument in function signature.
 # All functions defined here are instance methods.
@@ -234,7 +234,7 @@ A `HandshakeState` object contains DH variables `(s, e, rs, re)` and a variable 
 
 Intuitively, each parties `Initialize()` a `HandshakeState` object. Then parties call `WriteMessage()` and `ReadMessage()` , which perform according to the `handshake pattern`. After dealing with all message patterns in the handshake, these functions will return two `CipherState` objects for the later `transport phase`.
 
-# Noise Protocol Workflow, example
+# 5. Noise Protocol Workflow Example
 `Handshake pattern` defines `message patterns`. `Message patterns` determines sequence of `WriteMessage()` and `ReadMessage()` in handshake. 
 
 ```
@@ -245,7 +245,7 @@ XX(s, rs):
 ```
 
 An [illustration](https://noiseprotocol.org/docs/noise_stanford_seminar_2016.pdf):
-![](http://i65.tinypic.com/28jd0y9.png)
+
 
 The initiator and responder perform three DHs in handshake between two ephemeral keys (`ee`), the initiator's ephemeral key and responder's static key (`es`), initiator's static key and responder's ephemeral key (`se`). The pattern name `XX` means in the handshake, each party send its static key to the other party even before the handshake starts: they both *pre-shares* their own static public key.
 
@@ -253,11 +253,11 @@ This figure shows some typical `Noise` implementation. `h` is always updated aft
 
 Also note how it is possible for the initiator to authenticate the responder from the second message: the fact that the initiator can decrypt the payload of the second message testifies to the message’s sender’s possession of the private key corresponding to `s` sent. 
 
-# Security Analysis
-## Overview
+# 6. Security Analysis
+## 6.1 Overview
 In `Noise`, the choice of `handshake pattern` largely determines security properties. Other factors include pattern validity, choice of crypto primitives, protocol implementation etc. We can instantiate a handshake pattern with `DH functions`, `cipher functions` and `hash functions` to give a concrete `Noise protocol`.
 
-[Forward Security](https://en.wikipedia.org/wiki/Forward_secrecy)(FS) is a property of secure communication in which compromises of long-term keys does not compromise past session keys. FS protects past sessions against future compromises of secret keys[1]. `Noise` support FS in some handshake pattern.
+[Forward Security](https://en.wikipedia.org/wiki/Forward_secrecy)(FS) is a property of secure communication in which compromises of long-term keys does not compromise past session keys. FS protects past sessions against future compromises of secret keys[Wifi for FS](https://en.wikipedia.org/wiki/Forward_secrecy). `Noise` support FS in some handshake pattern.
 
 Different protocol patterns lead to different security properties. The two major kinds of security property that we are concerned about, are **authentication** and **confidentiality**. `Noise` categorizes common levels of security properties achievable. 
 
@@ -280,8 +280,8 @@ The key difference between `2` and `3` is whether payload is encrypted with the 
 
 For integrity, `Noise` ultimately use `CipherState.EncryptWithAd()` and `CipherState.DecryptWithAd()` to send and receive messages. In `handshake phase`, `ad` uses `h`, which is the running hash of each message. To forge a message without breaking authentication, an attacker will have to achieve the presumably impossible task of  breaking a hash function (`HMAC()` based on used hash function). This robustness does rely on the implementer’s caution on choosing the particular cryptographically secure hash function. 
 
-## Analysis of Handshake Patterns
-### Pattern Validity
+## 6.2 Analysis of Handshake Patterns
+### 6.2.1 Pattern Validity
 
 `Noise` can describe many handshake patterns. A `Noise` pattern is `valid` if
 1. Parties can only send a static public key if they were initialized with a static key pair, and can only perform DH between private keys and public keys they possess.
@@ -293,7 +293,7 @@ For integrity, `Noise` ultimately use `CipherState.EncryptWithAd()` and `CipherS
 
 As in any cryptographic settings, home-brew is always dangerous. `Noise` itself arises for the purpose of limiting the design freedom that programmers are allowed to, thus reducing the possibilities for implementation errors. That being said, even the freedom regarding pattern design alone can be dangerous. `Noise` provides *recommended* one-way and interactive patterns. `Noise` also lists the security properties for these patterns. We take a few for example analyses.
 
-## Analysis of a One-way Pattern
+## 6.3 Analysis of a One-way Pattern
 ```
 N(rs):
   <- s
@@ -332,7 +332,7 @@ Recipient is known because sender has pre-knowledge of recipient's static public
 
 The **authentication** level is `0` for `N` and `1` for `K` and `X`. `0` is caused by no server authentication. `1` is caused by server authentication.
 
-## Analysis of an Interactive Pattern
+## 6.4 Analysis of an Interactive Pattern
 ```
 XX(s, rs):
   -> e              A:0 C:0
@@ -358,11 +358,11 @@ NN()
 
 Let's analyze this interactive pattern that is similar to a textbook DH. This DH is performed on both parties' ephemeral keys. There is no authentication, so the level is `0`. Payload is encrypted after DH but it's vulnerable to an active attack.
 
-## Other security problem discussion
-### Resist to Downgrade Attack
+## 6.5 Other security problem discussion
+### 6.5.1 Resistance to Downgrade Attack
 TLS is vulnerable to `man-in-the-middle` downgrade attack even either party support strong ciphers. `Noise` hashes `protocol name` and `prologue` in the beginning of handshake. Each party must confirm their `prologue` are identical before next steps. This freedom to include pre-shared possibility into the handshake can securely rule out attacker’s downgrade attempts.
 
-# Comparison between Noise Pipes and TLS
+# 7. Comparison between Noise Pipe and TLS
 `Noise pipe` is a TLS-like protocol. `Noise pipe` use three handshakes including
 - 1. normal `full handshake`
 - 2. `zero-RTT handshake`
@@ -431,26 +431,26 @@ In TLS 1.2, if `check for session resumption` passes in step 1, the handshake is
 
 `Forward secrecy` in TLS is subtle, depending on the ciphers it used. While in `Noise`, if you use appropriate handshake patterns, you are guaranteed to at least weak Forward Secrecy, and sometimes even strong Forward Secrecy.
 
-# Miscellaneous
-## Subtleties in Specification
+# 8. Miscellaneous
+## 8.1 Subtleties in Specification
 We believe that some levels in authentication and confidentiality in `Noise`'s specification are worth a little more discussion. The difference between authentication level `1` and `2` is to defend against the situation where the recipient’s static private key getting compromised. The differences in such properties might not entirely be from the nature of the design or implementation of patterns, but rather a combined implication of possible facts.  As shown in the documentation, proper implementation can achieve any of the three possible levels. 
 
 It's the same case for confidentiality level `4` and `5`, where forward secrecy can be weak or strong depending on whether the recipient's static private key is secure. It’s not something that `Noise` itself can speaks strongly of.
 
-## Future extentions
+## 8.2 Future extentions
 Among crypto primitives, `Noise` hasn't use signature functions. In some patterns, sender verification is based on DH involving the sender's static private keys. It's vulnerable to some attacks if sender's private key is compromised. `Noise` might include signatures in a future version, but bring other trade-offs as brought up in the documentation. The details of such extensions and complications remains to be learned. But one can generally be ensured that extra complexity will be brought into the system, because more keys, more patterns, more handshake rounds might become necessitated. 
 
-# Summary
+# 9. Summary
 `Noise` is a secure protocol based on Diffie-Hellman key agreement. `Noise` can describe handshake protocols of various communication patterns. `WhatsApp`'s `Signal Protocol` shares the core ideas with `Noise`: Double Ratchet Algorithm, prekeys and a triple Diffie–Hellman (3-DH) handshake. `Noise` has suggestions and requirements for application responsibilities and cryptographic functions. A concrete and secure `Noise` protocol can come into shape with these suggestions properly taken into consideration during instantiation.
 
-# Reference
+# 10. Reference
 [The Noise Protocol Framework, Trevor Perrin (noise@trevp.net), Revision: 33, Date: 2017-10-04](http://noiseprotocol.org/noise.html)
 
 [Video: The Noise Protocol Framework, by David Wong](https://cryptoservices.github.io/cryptography/protocols/2016/04/27/noise-protocol.html) 
 
 [Slide for Noise Protocol Framework, Trevor Perrin](https://noiseprotocol.org/docs/noise_stanford_seminar_2016.pdf)
 
-[1] https://en.wikipedia.org/wiki/Forward_secrecy
+[Wifi for FS](https://en.wikipedia.org/wiki/Forward_secrecy)
 
 https://en.wikipedia.org/wiki/Authenticated_encryption
 
