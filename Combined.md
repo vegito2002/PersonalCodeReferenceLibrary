@@ -246,7 +246,7 @@ XX(s, rs):
 
 An [illustration](https://noiseprotocol.org/docs/noise_stanford_seminar_2016.pdf):
 
-<img src="http://i65.tinypic.com/28jd0y9.png" height="300"/>
+<!-- <img src="http://i65.tinypic.com/28jd0y9.png" height="300"/> -->
 
 The initiator and responder perform three DHs in handshake between two ephemeral keys (`ee`), the initiator's ephemeral key and responder's static key (`es`), initiator's static key and responder's ephemeral key (`se`). The pattern name `XX` means in the handshake, each party send its static key to the other party even before the handshake starts: they both *pre-shares* their own static public key.
 
