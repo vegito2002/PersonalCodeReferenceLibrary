@@ -4,7 +4,6 @@ Team Members:
 * Qiang Zhang (qzhang46@jhu.edu)
 
 # Noise Protocol Overview
-
 Noise Protocol(Noise) is a framework based on `Diffie-Hellman(DH)` key agreement.
 
 `Noise` has two phases, `handshake phase` and `transport phase`. In the former, two parties exchange DH public keys and perform a sequence of DH operations, hashing the DH results into a shared secret key incrementally, eventually resulting in a final shared secret that can be used to encrypt all traffic during subsequent `transport phase`. 
@@ -87,7 +86,6 @@ class CipherState:
             return DECRYPT(k, n++, ad, ciphertext)
         else:
             return ciphertext
-
 
 class SymmetricState:
     cipherState
@@ -247,7 +245,7 @@ XX(s, rs):
 ```
 
 An [illustration](https://noiseprotocol.org/docs/noise_stanford_seminar_2016.pdf):
-![][http://i65.tinypic.com/28jd0y9.png]
+![](http://i65.tinypic.com/28jd0y9.png)
 
 The initiator and responder perform three DHs in handshake between two ephemeral keys (`ee`), the initiator's ephemeral key and responder's static key (`es`), initiator's static key and responder's ephemeral key (`se`). The pattern name `XX` means in the handshake, each party send its static key to the other party even before the handshake starts: they both *pre-shares* their own static public key.
 
@@ -296,7 +294,6 @@ For integrity, `Noise` ultimately use `CipherState.EncryptWithAd()` and `CipherS
 As in any cryptographic settings, home-brew is always dangerous. `Noise` itself arises for the purpose of limiting the design freedom that programmers are allowed to, thus reducing the possibilities for implementation errors. That being said, even the freedom regarding pattern design alone can be dangerous. `Noise` provides *recommended* one-way and interactive patterns. `Noise` also lists the security properties for these patterns. We take a few for example analyses.
 
 ## Analysis of a One-way Pattern
-
 ```
 N(rs):
   <- s
@@ -336,7 +333,6 @@ Recipient is known because sender has pre-knowledge of recipient's static public
 The **authentication** level is `0` for `N` and `1` for `K` and `X`. `0` is caused by no server authentication. `1` is caused by server authentication.
 
 ## Analysis of an Interactive Pattern
-
 ```
 XX(s, rs):
   -> e              A:0 C:0
@@ -363,9 +359,7 @@ NN()
 Let's analyze this interactive pattern that is similar to a textbook DH. This DH is performed on both parties' ephemeral keys. There is no authentication, so the level is `0`. Payload is encrypted after DH but it's vulnerable to an active attack.
 
 ## Other security problem discussion
-
 ### Resist to Downgrade Attack
-
 TLS is vulnerable to `man-in-the-middle` downgrade attack even either party support strong ciphers. `Noise` hashes `protocol name` and `prologue` in the beginning of handshake. Each party must confirm their `prologue` are identical before next steps. This freedom to include pre-shared possibility into the handshake can securely rule out attacker’s downgrade attempts.
 
 # Comparison between Noise Pipes and TLS
