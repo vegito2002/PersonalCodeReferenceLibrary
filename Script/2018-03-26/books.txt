@@ -1,0 +1,18 @@
+Computer Networking - A Top-Down Approach (6th Edition)
+Database System Concepts(6th.Edition)
+Design Patterns Explained Simply
+Designing Data Intensive Applications[1p3a-system-design] (**reading**)
+Effective Java 3rd Edition (**to read soon**)
+Head First Design Patterns
+Head First Object Oriented Analysis and Design
+HTTP The Definitive Guide (**to read soon**)
+Introduction to Algorithms (Third Edition)
+Linux System Programming (**to read soon**)
+Operating Systems Three Easy Pieces v091
+Sedgewick-Algorithms (4th Edition)
+The C Programming Language 2nd
+Head First Java 2nd Edition
+Refactoring-Improving the Design of Existing Code
+Constraint Logic Programming Using Eclipse
+Principle Of Programming Language
+Real World OCaml
